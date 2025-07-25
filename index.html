@@ -29,7 +29,6 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
         header {
             background: #FF9966;
@@ -64,8 +63,7 @@
             flex: 1;
             gap: 8px;
             padding: 10px;
-            overflow-y: auto; /* スクロール可能に変更 */
-            height: calc(100vh - 120px); /* 高さを調整 */
+            overflow-y: auto;
         }
         .category-box {
             background: white;
@@ -108,9 +106,6 @@
             font-size: 0.8rem;
             display: flex;
             flex-direction: column;
-            position: sticky; /* フッターを固定 */
-            bottom: 0;
-            z-index: 10;
             flex-shrink: 0;
         }
         .footer-contact {
@@ -154,9 +149,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             flex: 1;
-            overflow-y: auto; /* スクロール可能に変更 */
+            overflow-y: auto;
             padding-bottom: 20px;
-            max-height: calc(100vh - 120px);
         }
         .word-card {
             background: white;
@@ -305,6 +299,15 @@
             display: none;
         }
         
+        /* PayPal container - only visible on main screen */
+        #paypal-container {
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none; /* Hidden by default */
+        }
+        
         /* スクロールバーのスタイル */
         ::-webkit-scrollbar {
             width: 8px;
@@ -346,8 +349,9 @@
     <div class="category-container" id="categoryContainer">
         <!-- Category buttons will be added by JS -->
     </div>
-
-
+    
+    <!-- PayPal container only on main screen -->
+    <div id="paypal-container"></div>
     
     <footer>
         <div class="footer-contact">Contact us</div>
@@ -695,6 +699,17 @@
             // Hide loading screen
             setTimeout(function() {
                 document.getElementById('loading').style.display = 'none';
+                
+                // Load PayPal SDK after main content is loaded
+                const script = document.createElement('script');
+                script.src = 'https://www.paypal.com/sdk/js?client-id=BAA0suVAzcTFoJgRUMmayNk7_ZdiVzOf-FAcRGFkBOfbIrrZHRPCVk08izlnAVYXfOv1t80zabAbgIOBCs&components=hosted-buttons&disable-funding=venmo&currency=USD';
+                script.onload = function() {
+                    paypal.HostedButtons({
+                        hostedButtonId: "MFVPZZDFUTKEN",
+                    }).render("#paypal-container");
+                    document.getElementById('paypal-container').style.display = 'block';
+                };
+                document.head.appendChild(script);
             }, 500);
             
             // Hide install button if already installed
@@ -729,18 +744,5 @@
             }
         });
  </script>
-    
-<script 
-  src="https://www.paypal.com/sdk/js?client-id=BAA0suVAzcTFoJgRUMmayNk7_ZdiVzOf-FAcRGFkBOfbIrrZHRPCVk08izlnAVYXfOv1t80zabAbgIOBCs&components=hosted-buttons&disable-funding=venmo&currency=USD">
-</script>
-
-<div id="paypal-container-MFVPZZDFUTKEN"></div>
-<script>
-  paypal.HostedButtons({
-    hostedButtonId: "MFVPZZDFUTKEN",
-  }).render("#paypal-container-MFVPZZDFUTKEN")
-</script>
-        
-   
 </body>
 </html>
