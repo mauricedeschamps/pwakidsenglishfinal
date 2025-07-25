@@ -25,7 +25,7 @@
         }
         body {
             font-family: 'Comic Sans MS', 'YuGothic', sans-serif;
-            background: #FFFFFF; /* Changed to white background */
+            background: #FFFFFF;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -39,6 +39,7 @@
             font-size: 1.1rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: relative;
+            flex-shrink: 0;
         }
         .header-content {
             display: flex;
@@ -63,6 +64,8 @@
             flex: 1;
             gap: 8px;
             padding: 10px;
+            overflow-y: auto; /* スクロール可能に変更 */
+            height: calc(100vh - 120px); /* 高さを調整 */
         }
         .category-box {
             background: white;
@@ -105,6 +108,10 @@
             font-size: 0.8rem;
             display: flex;
             flex-direction: column;
+            position: sticky; /* フッターを固定 */
+            bottom: 0;
+            z-index: 10;
+            flex-shrink: 0;
         }
         .footer-contact {
             margin-bottom: 5px;
@@ -120,7 +127,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #FFFFFF; /* Changed to white background */
+            background: #FFFFFF;
             z-index: 100;
             display: none;
             flex-direction: column;
@@ -131,6 +138,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            flex-shrink: 0;
         }
         .back-button {
             background: #FF9966;
@@ -146,9 +154,9 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             flex: 1;
-            overflow-y: auto;
-            max-height: calc(100vh - 120px);
+            overflow-y: auto; /* スクロール可能に変更 */
             padding-bottom: 20px;
+            max-height: calc(100vh - 120px);
         }
         .word-card {
             background: white;
@@ -295,6 +303,22 @@
             cursor: pointer;
             z-index: 100;
             display: none;
+        }
+        
+        /* スクロールバーのスタイル */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF9966;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B6B;
         }
     </style>
 </head>
